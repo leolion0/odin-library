@@ -109,3 +109,64 @@ document.querySelectorAll('.toggle-read-button').forEach(item => {
         bookReadDiv.textContent = myLibrary[bookTitle].read;
     })
 })
+
+
+let bookAddButton = document.querySelector("#new-book-button")
+bookAddButton.addEventListener('click', event =>{
+    if (bookAddButton.dataset.open == "true") return;
+    bookAddButton.dataset.open = "true"
+    let bookAddForm = document.createElement('form');
+    bookAddForm.id = "add-form"
+    let titleObj = createFormField("title", 'text', "Book title:")
+    let authorObj = createFormField("author", 'text', "Author:")
+    let pagesObj = createFormField("pages", 'text', "Page count:")
+    let readObj = createFormField("read-status", 'checkbox', "Has been read?")
+
+
+    appendFormField(bookAddForm, titleObj)
+    appendFormField(bookAddForm, authorObj)
+    appendFormField(bookAddForm, pagesObj)
+    appendFormField(bookAddForm, readObj)
+    let confirmButton = document.createElement('button')
+    confirmButton.id = "confirm-button"
+    confirmButton.type = 'button'
+    let cancelButton = document.createElement('button')
+    cancelButton.id = "cancel-button"
+    cancelButton.type = 'button'
+
+    confirmButton.textContent = "Confirm"
+    cancelButton.textContent = "Cancel"
+
+    bookAddForm.appendChild(confirmButton)
+    bookAddForm.appendChild(cancelButton)
+
+
+    // bookAddForm.appendChild(titleInput);
+    let bookContainer = document.querySelector("#book-container")
+    document.querySelector('body').insertBefore(bookAddForm, bookContainer)
+    bookAddButton.dataset.open 
+})
+document.addEventListener('click', function(e){
+    if (e.target && e.target.id == "cancel-button"){
+        document.querySelector("#add-form").remove()
+        document.querySelector("#new-book-button").dataset.open = "false"
+    }
+})
+
+
+function createFormField(name, type, labelText) {
+    let tempLable = document.createElement('label')
+    tempLable.setAttribute('for', name);
+    tempLable.textContent = labelText;
+
+    let tempInput = document.createElement('input')
+    tempInput.type = type
+    tempInput.id = name;
+    tempInput.name = name;
+    return {label: tempLable, input: tempInput}
+}
+
+function appendFormField(parent, comboObj) {
+    parent.appendChild(comboObj.label);
+    parent.appendChild(comboObj.input)
+}
