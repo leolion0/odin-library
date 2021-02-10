@@ -13,7 +13,8 @@ function Book(title, author, pages, read) {
             if (!this.read) return "not read yet";
             else return "has been read";
         }
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${hasBeenReadString()}.`
+        return `${this.title} by ${this.author}, ${this.pages} pages,
+                 ${hasBeenReadString()}.`
     }
 }
 
@@ -25,7 +26,8 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 addBookToLibrary("Porry Harter", "J.K. Rolling", 678, false)
-addBookToLibrary("Making Music: 74 Creative Strategies for Electronic Music Producers",
+addBookToLibrary(
+        "Making Music: 74 Creative Strategies for Electronic Music Producers",
         "Dennis DeSantis", 254, true)
 addBookToLibrary("Deep Work", "Cal Newport", 423, false)
 addBookToLibrary("Happy Feet", "Wizard Man", "420", false)
