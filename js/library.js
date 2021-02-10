@@ -29,10 +29,11 @@ console.log(myLibrary[3].info())
 const bookContainer = document.querySelector("#book-container")
 
 let booksArray = []
-myLibrary.forEach(element => {
-    let index = booksArray.push(document.createElement('div')) - 1
-    booksArray[index].id = `book-${index}`
-    booksArray[index].classList.add("book-row")
+
+for (bookIndex = 0; bookIndex < myLibrary.length; bookIndex++){
+    booksArray.push(document.createElement('div'))
+    booksArray[bookIndex].id = `book-${bookIndex}`
+    booksArray[bookIndex].classList.add("book-row")
 
     function createSpanFromString(text){
         const tempSpan = document.createElement('span');
@@ -46,20 +47,17 @@ myLibrary.forEach(element => {
         return tempSpan
     }
 
-    let currentBook = myLibrary[index]
-    console.log(currentBook.title)
+    let currentBook = myLibrary[bookIndex]
+
     let titleSpan = createBookInfoSpanFromString(currentBook.title);
-    console.log(titleSpan)
     let authorSpan = createBookInfoSpanFromString(currentBook.author);
     let pagesSpan = createBookInfoSpanFromString(currentBook.pages);
     let readSpan = createBookInfoSpanFromString(currentBook.read);
 
-    booksArray[index].appendChild(titleSpan);
-    booksArray[index].appendChild(authorSpan);
-    booksArray[index].appendChild(pagesSpan);
-    booksArray[index].appendChild(readSpan);
+    booksArray[bookIndex].appendChild(titleSpan);
+    booksArray[bookIndex].appendChild(authorSpan);
+    booksArray[bookIndex].appendChild(pagesSpan);
+    booksArray[bookIndex].appendChild(readSpan);
 
-
-    bookContainer.appendChild(booksArray[index])
-    
-});
+    bookContainer.appendChild(booksArray[bookIndex])
+}
