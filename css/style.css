@@ -10,9 +10,31 @@ html, body {
 #book-container {
     position: relative;
     display: grid;
+    flex-direction: column;
     margin: auto;
-    /* background: aqua; */
+    background: rgb(204, 207, 207);
+    grid-auto-rows: auto;
     height: 80%;
     width: 80%;
+    align-content: start;
+}
+.book-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    background-color: transparent;
+    height: min-content;
+    margin: 10px 0px 10px 0px;
 
+}
+
+.book-info {
+    margin: 0 2px 0 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color:  rgb(233, 233, 233);;
+    width: 97%;
+    height: 100%;
 }
