@@ -1,3 +1,4 @@
+
 function Book(title, author, pages, read) {
     this.title = title;
     this.author = author;
@@ -11,6 +12,7 @@ function Book(title, author, pages, read) {
         return `${this.title} by ${this.author}, ${this.pages} pages, ${hasBeenReadString()}.`
     }
 }
+
 let myLibrary = [];
 
 function addBookToLibrary(title, author, pages, read) {
@@ -18,22 +20,27 @@ function addBookToLibrary(title, author, pages, read) {
     console.log(tempBook.title)
     return myLibrary.push(tempBook);
 }
+
 addBookToLibrary("Porry Harter", "J.K. Rolling", 678, false)
 addBookToLibrary("Making Music: 74 Creative Strategies for Electronic Music Producers",
         "Dennis DeSantis", 254, true)
 addBookToLibrary("Deep Work", "Cal Newport", 423, false)
 addBookToLibrary("Happy Feet", "Wizard Man", "420", false)
 
-console.log(myLibrary[3].info())
+Book.prototype.toggleRead = function () {
+    this.read = !this.read
+}
+
+
+
 
 const bookContainer = document.querySelector("#book-container")
-
-let booksArray = []
+let bookRowDivs = []
 
 for (bookIndex = 0; bookIndex < myLibrary.length; bookIndex++){
-    booksArray.push(document.createElement('div'))
-    booksArray[bookIndex].id = `book-${bookIndex}`
-    booksArray[bookIndex].classList.add("book-row")
+    bookRowDivs.push(document.createElement('div'))
+    bookRowDivs[bookIndex].id = `book-${bookIndex}`
+    bookRowDivs[bookIndex].classList.add("book-row")
 
     function createSpanFromString(text){
         const tempSpan = document.createElement('span');
@@ -54,10 +61,40 @@ for (bookIndex = 0; bookIndex < myLibrary.length; bookIndex++){
     let pagesSpan = createBookInfoSpanFromString(currentBook.pages);
     let readSpan = createBookInfoSpanFromString(currentBook.read);
 
-    booksArray[bookIndex].appendChild(titleSpan);
-    booksArray[bookIndex].appendChild(authorSpan);
-    booksArray[bookIndex].appendChild(pagesSpan);
-    booksArray[bookIndex].appendChild(readSpan);
+    bookRowDivs[bookIndex].appendChild(titleSpan);
+    bookRowDivs[bookIndex].appendChild(authorSpan);
+    bookRowDivs[bookIndex].appendChild(pagesSpan);
+    bookRowDivs[bookIndex].appendChild(readSpan);
 
-    bookContainer.appendChild(booksArray[bookIndex])
+    let btnRemove = document.createElement('button');
+    btnRemove.classList.add('remove-button');
+    btnRemove.dataset.index = bookIndex;
+    btnRemove.textContent = "Remove Book"
+
+    let btnToggleRead = document.createElement('button');
+    btnToggleRead.classList.add('toggle-read-button');
+    btnToggleRead.dataset.index = bookIndex;
+    btnToggleRead.textContent = "Toggle Read"
+
+    bookRowDivs[bookIndex].appendChild(btnToggleRead);
+    bookRowDivs[bookIndex].appendChild(btnRemove);
+
+
+    bookContainer.appendChild(bookRowDivs[bookIndex])
 }
+
+document.querySelectorAll('.remove-button').forEach(item => {
+    item.addEventListener('click', event => {
+        myLibrary.splice(item.dataset.index, 1)
+        bookRowDivs[item.dataset.index].remove()
+
+    })
+})
+document.querySelectorAll('.toggle-read-button').forEach(item => {
+    item.addEventListener('click', event => {
+        let bookIndex = item.dataset.index
+        myLibrary[bookIndex].toggleRead()
+        let bookReadDiv = bookRowDivs[bookIndex].children.item(3);
+        bookReadDiv.textContent = myLibrary[bookIndex].read;
+    })
+})
