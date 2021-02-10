@@ -40,74 +40,83 @@ Book.prototype.toggleRead = function () {
 const bookContainer = document.querySelector("#book-container")
 let rowObj = {}
 
+
+function createSpanFromString(text){
+    const tempSpan = document.createElement('span');
+    tempSpan.textContent = text;
+    return tempSpan
+}
+
+function createBookInfoSpanFromString(text){
+    tempSpan = createSpanFromString(text)
+    tempSpan.classList.add("book-info")
+    return tempSpan
+}
+
+function addBookToRows(book){
+    let curTitle = book.title
+    
+    rowObj[curTitle] = document.createElement('div');
+
+    rowObj[curTitle].classList.add("book-row")
+    rowObj[curTitle].dataset.title = book.title
+
+
+
+
+    let titleSpan = createBookInfoSpanFromString(book.title);
+    let authorSpan = createBookInfoSpanFromString(book.author);
+    let pagesSpan = createBookInfoSpanFromString(book.pages);
+    let readSpan = createBookInfoSpanFromString(book.read);
+
+    rowObj[curTitle].appendChild(titleSpan);
+    rowObj[curTitle].appendChild(authorSpan);
+    rowObj[curTitle].appendChild(pagesSpan);
+    rowObj[curTitle].appendChild(readSpan);
+
+    let btnRemove = document.createElement('button');
+    btnRemove.classList.add('remove-button', 'book-info');
+    btnRemove.textContent = "Remove Book"
+
+    let btnToggleRead = document.createElement('button');
+    btnToggleRead.classList.add('toggle-read-button', 'book-info');
+    btnToggleRead.textContent = "Toggle Read"
+
+    rowObj[curTitle].appendChild(btnToggleRead);
+    rowObj[curTitle].appendChild(btnRemove);
+
+
+    bookContainer.appendChild(rowObj[curTitle])
+}
+
 for (let prop in myLibrary)
     {
-        let currentBook = myLibrary[prop]
-        let curTitle = currentBook.title
-        
-        rowObj[curTitle] = document.createElement('div');
-
-        rowObj[curTitle].classList.add("book-row")
-        rowObj[curTitle].dataset.title = currentBook.title
-    
-        function createSpanFromString(text){
-            const tempSpan = document.createElement('span');
-            tempSpan.textContent = text;
-            return tempSpan
-        }
-    
-        function createBookInfoSpanFromString(text){
-            tempSpan = createSpanFromString(text)
-            tempSpan.classList.add("book-info")
-            return tempSpan
-        }
-    
-    
-        let titleSpan = createBookInfoSpanFromString(currentBook.title);
-        let authorSpan = createBookInfoSpanFromString(currentBook.author);
-        let pagesSpan = createBookInfoSpanFromString(currentBook.pages);
-        let readSpan = createBookInfoSpanFromString(currentBook.read);
-
-        rowObj[curTitle].appendChild(titleSpan);
-        rowObj[curTitle].appendChild(authorSpan);
-        rowObj[curTitle].appendChild(pagesSpan);
-        rowObj[curTitle].appendChild(readSpan);
-    
-        let btnRemove = document.createElement('button');
-        btnRemove.classList.add('remove-button', 'book-info');
-        btnRemove.textContent = "Remove Book"
-    
-        let btnToggleRead = document.createElement('button');
-        btnToggleRead.classList.add('toggle-read-button', 'book-info');
-        btnToggleRead.textContent = "Toggle Read"
-    
-        rowObj[curTitle].appendChild(btnToggleRead);
-        rowObj[curTitle].appendChild(btnRemove);
-    
-    
-        bookContainer.appendChild(rowObj[curTitle])
+        addBookToRows(myLibrary[prop])
     }
 
 
 
-document.querySelectorAll('.remove-button').forEach(item => {
-    item.addEventListener('click', event => {
-        let bookTitle = item.parentElement.dataset.title;
+document.addEventListener('click', function(e){
+    if (e.target && e.target.className.includes("remove-button")){
+
+        let bookTitle = e.target.parentElement.dataset.title;
         delete myLibrary[bookTitle]
         rowObj[bookTitle].remove()
         delete rowObj[bookTitle]
-
-
-    })
+    }
 })
-document.querySelectorAll('.toggle-read-button').forEach(item => {
-    item.addEventListener('click', event => {
-        let bookTitle = item.parentElement.dataset.title;
+    
 
-        let bookReadDiv = rowObj[bookTitle].children.item(3);
-        myLibrary[bookTitle].toggleRead()
-        bookReadDiv.textContent = myLibrary[bookTitle].read;
-    })
+
+document.addEventListener('click', function(e){
+    if (e.target && e.target.className.includes("toggle-read-button")){
+
+    let bookTitle = e.target.parentElement.dataset.title;
+
+    let bookReadDiv = rowObj[bookTitle].children.item(3);
+    myLibrary[bookTitle].toggleRead()
+    bookReadDiv.textContent = myLibrary[bookTitle].read;
+    }
 })
 
 
@@ -141,7 +150,6 @@ bookAddButton.addEventListener('click', event =>{
     bookAddForm.appendChild(cancelButton)
 
 
-    // bookAddForm.appendChild(titleInput);
     let bookContainer = document.querySelector("#book-container")
     document.querySelector('body').insertBefore(bookAddForm, bookContainer)
     bookAddButton.dataset.open 
@@ -150,6 +158,32 @@ document.addEventListener('click', function(e){
     if (e.target && e.target.id == "cancel-button"){
         document.querySelector("#add-form").remove()
         document.querySelector("#new-book-button").dataset.open = "false"
+    }
+})
+
+
+
+document.addEventListener('click', function(e){
+    if (e.target && e.target.id == "confirm-button"){
+        console.log(myLibrary);
+        let inputElements = {
+            'title':document.getElementById("title"),
+            'author':document.getElementById("author"),
+            'pages':document.getElementById("pages"),
+            'read-status':document.getElementById("read-status")
+        }
+        let bookTitle = inputElements['title'].value;
+
+        let bookAuthor = inputElements['author'].value;
+        let bookPages = parseInt(inputElements['pages'].value, 10);
+        let readStatus = inputElements['read-status'].checked;
+
+        addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatus);
+        addBookToRows(myLibrary[bookTitle])
+
+        document.querySelector("#add-form").remove()
+        document.querySelector("#new-book-button").dataset.open = "false"
+
     }
 })
 
