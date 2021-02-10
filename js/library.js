@@ -1,3 +1,7 @@
+function log (input) {
+    return console.log(input)
+}
+
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -13,12 +17,11 @@ function Book(title, author, pages, read) {
     }
 }
 
-let myLibrary = [];
+let myLibrary = {};
 
 function addBookToLibrary(title, author, pages, read) {
     let tempBook = new Book(title, author, pages, read)
-    console.log(tempBook.title)
-    return myLibrary.push(tempBook);
+    myLibrary[tempBook.title] = tempBook;
 }
 
 addBookToLibrary("Porry Harter", "J.K. Rolling", 678, false)
@@ -35,66 +38,74 @@ Book.prototype.toggleRead = function () {
 
 
 const bookContainer = document.querySelector("#book-container")
-let bookRowDivs = []
+let rowObj = {}
 
-for (bookIndex = 0; bookIndex < myLibrary.length; bookIndex++){
-    bookRowDivs.push(document.createElement('div'))
-    bookRowDivs[bookIndex].id = `book-${bookIndex}`
-    bookRowDivs[bookIndex].classList.add("book-row")
+for (let prop in myLibrary)
+    {
+        let currentBook = myLibrary[prop]
+        let curTitle = currentBook.title
+        
+        rowObj[curTitle] = document.createElement('div');
 
-    function createSpanFromString(text){
-        const tempSpan = document.createElement('span');
-        tempSpan.textContent = text;
-        return tempSpan
+        rowObj[curTitle].classList.add("book-row")
+        rowObj[curTitle].dataset.title = currentBook.title
+    
+        function createSpanFromString(text){
+            const tempSpan = document.createElement('span');
+            tempSpan.textContent = text;
+            return tempSpan
+        }
+    
+        function createBookInfoSpanFromString(text){
+            tempSpan = createSpanFromString(text)
+            tempSpan.classList.add("book-info")
+            return tempSpan
+        }
+    
+    
+        let titleSpan = createBookInfoSpanFromString(currentBook.title);
+        let authorSpan = createBookInfoSpanFromString(currentBook.author);
+        let pagesSpan = createBookInfoSpanFromString(currentBook.pages);
+        let readSpan = createBookInfoSpanFromString(currentBook.read);
+
+        rowObj[curTitle].appendChild(titleSpan);
+        rowObj[curTitle].appendChild(authorSpan);
+        rowObj[curTitle].appendChild(pagesSpan);
+        rowObj[curTitle].appendChild(readSpan);
+    
+        let btnRemove = document.createElement('button');
+        btnRemove.classList.add('remove-button', 'book-info');
+        btnRemove.textContent = "Remove Book"
+    
+        let btnToggleRead = document.createElement('button');
+        btnToggleRead.classList.add('toggle-read-button', 'book-info');
+        btnToggleRead.textContent = "Toggle Read"
+    
+        rowObj[curTitle].appendChild(btnToggleRead);
+        rowObj[curTitle].appendChild(btnRemove);
+    
+    
+        bookContainer.appendChild(rowObj[curTitle])
     }
 
-    function createBookInfoSpanFromString(text){
-        tempSpan = createSpanFromString(text)
-        tempSpan.classList.add("book-info")
-        return tempSpan
-    }
 
-    let currentBook = myLibrary[bookIndex]
-
-    let titleSpan = createBookInfoSpanFromString(currentBook.title);
-    let authorSpan = createBookInfoSpanFromString(currentBook.author);
-    let pagesSpan = createBookInfoSpanFromString(currentBook.pages);
-    let readSpan = createBookInfoSpanFromString(currentBook.read);
-
-    bookRowDivs[bookIndex].appendChild(titleSpan);
-    bookRowDivs[bookIndex].appendChild(authorSpan);
-    bookRowDivs[bookIndex].appendChild(pagesSpan);
-    bookRowDivs[bookIndex].appendChild(readSpan);
-
-    let btnRemove = document.createElement('button');
-    btnRemove.classList.add('remove-button');
-    btnRemove.dataset.index = bookIndex;
-    btnRemove.textContent = "Remove Book"
-
-    let btnToggleRead = document.createElement('button');
-    btnToggleRead.classList.add('toggle-read-button');
-    btnToggleRead.dataset.index = bookIndex;
-    btnToggleRead.textContent = "Toggle Read"
-
-    bookRowDivs[bookIndex].appendChild(btnToggleRead);
-    bookRowDivs[bookIndex].appendChild(btnRemove);
-
-
-    bookContainer.appendChild(bookRowDivs[bookIndex])
-}
 
 document.querySelectorAll('.remove-button').forEach(item => {
     item.addEventListener('click', event => {
-        myLibrary.splice(item.dataset.index, 1)
-        bookRowDivs[item.dataset.index].remove()
+        let bookTitle = item.parentElement.dataset.title;
+        delete myLibrary[bookTitle]
+        rowObj[bookTitle].remove()
+        delete rowObj[bookTitle]
+
 
     })
 })
 document.querySelectorAll('.toggle-read-button').forEach(item => {
     item.addEventListener('click', event => {
-        let bookIndex = item.dataset.index
-        myLibrary[bookIndex].toggleRead()
-        let bookReadDiv = bookRowDivs[bookIndex].children.item(3);
-        bookReadDiv.textContent = myLibrary[bookIndex].read;
+        let bookTitle = item.parentElement.dataset.title;
+
+        let bookReadDiv = rowObj[bookTitle].children.item(3);
+        myLibrary[bookTitle].toggleRead()
+        bookReadDiv.textContent = myLibrary[bookTitle].read;
     })
 })

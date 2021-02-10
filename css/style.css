@@ -12,6 +12,7 @@ html, body {
     display: grid;
     flex-direction: column;
     margin: auto;
+
     background: rgb(204, 207, 207);
     grid-auto-rows: auto;
     height: 80%;
@@ -20,7 +21,7 @@ html, body {
 }
 .book-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     width: 100%;
     background-color: transparent;
     height: min-content;
@@ -37,4 +38,11 @@ html, body {
     background-color:  rgb(233, 233, 233);;
     width: 97%;
     height: 100%;
+}
+
+button.book-info {
+    height: fit-content;
+    align-self: center;
+    justify-self: center;
+    width: 90%;
 }
