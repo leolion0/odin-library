@@ -12,12 +12,33 @@ html, body {
     display: grid;
     flex-direction: column;
     margin: auto;
+    margin-top: 20px;
 
     background: rgb(204, 207, 207);
+    border-radius: 2%;
     grid-auto-rows: auto;
+    height: fit-content;
+    width: 98%;
+    margin-bottom: auto;
+    align-content: start;
+
+}
+
+#book-container-bg{
+    background-color: aqua;
+    margin: 15px;
+    position: relative;
     height: 80%;
     width: 80%;
-    align-content: start;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    border-radius: 1%;
+    box-shadow: 0px 2px 8px gray;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 .book-row {
     display: grid;
@@ -40,9 +61,59 @@ html, body {
     height: 100%;
 }
 
+#new-book-container {
+    background-color: grey;
+    margin-top: 40px;
+    width: 98%;
+    margin-bottom: 20px;
+    align-self: center;
+    padding: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: max-content;
+    display: flex;
+
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
 button.book-info {
     height: fit-content;
     align-self: center;
     justify-self: center;
     width: 90%;
+}
+
+#new-book-button {
+    justify-self:center;
+    align-self: center;
+}
+label {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* align-self: center;
+    justify-self: center;
+    justify-content: center;
+    align-content: center; */
+    display: flexbox;
+    margin: 3px;
+}
+
+
+
+.new-book-input[type=text] {
+        /* border-radius: 10%; */
+        border: none;
+        border-bottom: 2px solid red;
+    
+        box-shadow: transparent;
+        background-color: transparent;
+        align-self: center;
+        justify-self: center;
+        justify-content: center;
+        align-content: center; 
+        margin: auto;
+        width:  135px;
+        display: flexbox;
 }

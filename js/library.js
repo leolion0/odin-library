@@ -152,14 +152,17 @@ bookAddButton.addEventListener('click', event =>{
     bookAddForm.appendChild(cancelButton)
 
 
-    let bookContainer = document.querySelector("#book-container")
-    document.querySelector('body').insertBefore(bookAddForm, bookContainer)
+    let tempFix = document.querySelector("#temp-fix")
+
+    toggleAddBook()
+    document.querySelector('#new-book-container').insertBefore(bookAddForm, tempFix)
     bookAddButton.dataset.open 
 })
 document.addEventListener('click', function(e){
     if (e.target && e.target.id == "cancel-button"){
         document.querySelector("#add-form").remove()
         document.querySelector("#new-book-button").dataset.open = "false"
+        toggleAddBook()
     }
 })
 
@@ -185,6 +188,7 @@ document.addEventListener('click', function(e){
 
         document.querySelector("#add-form").remove()
         document.querySelector("#new-book-button").dataset.open = "false"
+        toggleAddBook()
 
     }
 })
@@ -194,15 +198,26 @@ function createFormField(name, type, labelText) {
     let tempLable = document.createElement('label')
     tempLable.setAttribute('for', name);
     tempLable.textContent = labelText;
+    tempLable.classList.add('new-book-label')
 
     let tempInput = document.createElement('input')
     tempInput.type = type
     tempInput.id = name;
     tempInput.name = name;
+    tempInput.classList.add('new-book-input')
     return {label: tempLable, input: tempInput}
 }
 
 function appendFormField(parent, comboObj) {
     parent.appendChild(comboObj.label);
     parent.appendChild(comboObj.input)
+}
+
+function toggleAddBook(){
+    let bookAddButton = document.querySelector("#new-book-button");
+    if (bookAddButton.style.display === "none") {
+      bookAddButton.style.display = "block";
+    } else {
+      bookAddButton.style.display = "none";
+    }
 }
