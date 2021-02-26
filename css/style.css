@@ -1,3 +1,12 @@
+:root{
+    --eerie-black: #151414;
+    --oxford-blue: #0d1238ff;
+    --carolina-blue: #009ddcff;
+    --orange-pantone: #f26430ff;
+    --green-cyan: #009b72ff;
+    
+}
+
 html, body {
     height: 100%;
     width: 100%;
@@ -6,6 +15,12 @@ html, body {
     flex-direction: column;
     justify-content: center;
     font-size: larger;
+    color: #161c4e;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+
+}
+body {
+    background-image: url("../images/oriental-tiles.png");
 }
 
 #book-container {
@@ -15,7 +30,7 @@ html, body {
     margin: auto;
     margin-top: 20px;
 
-    background: rgb(204, 207, 207);
+    background: #c4edff;
     border-radius: 5px;
     grid-auto-rows: auto;
     height: fit-content;
@@ -29,19 +44,19 @@ html, body {
 }
 
 #book-container-bg{
-    background-color: aqua;
+    background-color: var(--eerie-black);
     margin: 15px;
     position: relative;
     height: 70%;
     min-height: 600px;
-    width: 900px;
+    width: 1700px;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
     align-content: center;
     display: flex;
     border-radius: 16px;
-    box-shadow: 0px 2px 8px gray;
+    box-shadow: 0px 2px 8px rgb(0, 0, 0);
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto;
@@ -62,13 +77,21 @@ html, body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color:  rgb(233, 233, 233);;
+    background-color:white;
     width: 97%;
     height: 100%;
+    border-radius:2px;
+    border-width: 0px;
+    box-sizing: border-box;
+    padding: 8px;
+    /* color: black; */
+    /* box-shadow: 0px 0px 10px #ebf9ff8e; */
 }
 
+
+
 #new-book-container {
-    background-color: grey;
+    background-color: #c4edff;
     margin-top: 40px;
     width: 98%;
     margin-bottom: 20px;
@@ -85,13 +108,40 @@ html, body {
     flex-direction: row;
     box-sizing: border-box;
 }
+button {
+    font-size: inherit;
+    font-size: 0.8emem;
+}
 
 button.book-info {
     height: fit-content;
     align-self: center;
     justify-self: center;
     width: 90%;
+     border-radius: 4px; 
+    border-width: 1px; 
+    /* border-style: none; */
+    color: var(--orange-pantone);
+    background-color: white;
+    height: 34px;
+    font-size: 0.7em;
+    max-height: 100%;
+    box-shadow: none;
+    border-style: solid;
+    border-color: rgba(27, 27, 27, 0.5);
+    box-sizing: border-box;
+    padding: 20px;
+    color: #672107;
 }
+button.book-info:hover {
+    box-shadow: 0px 0px 2px var(--eerie-black);
+}
+
+button.book-info.remove-button {
+    background-color: #ce3118;
+    color: white;
+}
+
 
 #new-book-button {
     justify-self:center;
@@ -123,4 +173,14 @@ label {
         margin: auto;
         width:  135px;
         display: flexbox;
+}
+
+@media (max-width: 1000px){
+    body {
+        font-size: larger;
+    }
+    #book-container-bg {
+        width: 900px;
+    }
+
 }
