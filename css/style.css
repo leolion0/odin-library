@@ -5,6 +5,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    font-size: larger;
 }
 
 #book-container {
@@ -15,12 +16,15 @@ html, body {
     margin-top: 20px;
 
     background: rgb(204, 207, 207);
-    border-radius: 2%;
+    border-radius: 5px;
     grid-auto-rows: auto;
     height: fit-content;
     width: 98%;
     margin-bottom: auto;
     align-content: start;
+    box-sizing: border-box;
+    padding-right: 8px;
+    padding-left: 8px;
 
 }
 
@@ -28,21 +32,23 @@ html, body {
     background-color: aqua;
     margin: 15px;
     position: relative;
-    height: 80%;
-    width: 80%;
+    height: 70%;
+    min-height: 600px;
+    width: 900px;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
     align-content: center;
     display: flex;
-    border-radius: 1%;
+    border-radius: 16px;
     box-shadow: 0px 2px 8px gray;
     flex-direction: column;
     justify-content: flex-start;
+    overflow-y: auto;
 }
 .book-row {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr) 100px 100px;
     width: 100%;
     background-color: transparent;
     height: min-content;
@@ -72,6 +78,7 @@ html, body {
     padding-bottom: 10px;
     height: max-content;
     display: flex;
+    border-radius: 5px;
 
     justify-content: center;
     align-content: center;

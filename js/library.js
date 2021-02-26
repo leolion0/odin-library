@@ -170,7 +170,6 @@ document.addEventListener('click', function(e){
 
 document.addEventListener('click', function(e){
     if (e.target && e.target.id == "confirm-button"){
-        console.log(myLibrary);
         let inputElements = {
             'title':document.getElementById("title"),
             'author':document.getElementById("author"),
@@ -183,6 +182,11 @@ document.addEventListener('click', function(e){
         let bookPages = parseInt(inputElements['pages'].value, 10);
         let readStatus = inputElements['read-status'].checked;
 
+        if(bookTitle.trim() === "" || 
+                bookAuthor.trim() === "" ||
+                isNaN(bookPages)){
+                    return
+                }
         addBookToLibrary(bookTitle, bookAuthor, bookPages, readStatus);
         addBookToRows(myLibrary[bookTitle])
 
